@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Weather App</title>
+  <style>
+    body { font-family: Arial; background:#eef; padding:30px; }
+    #box { width:350px; background:white; padding:20px; border-radius:8px; border:1px solid #ccc; }
+    input { width:100%; padding:8px; margin-bottom:10px; font-size:16px; }
+    button { padding:10px 20px; font-size:16px; cursor:pointer; }
+    #error { color:red; margin-top:10px; }
+    #result { margin-top:15px; }
+  </style>
+</head>
+<body>
+
+  <h2>Weather Information App</h2>
+
+  <div id="box">
+    <input type="text" id="city" placeholder="Enter city name">
+    <button id="btn">Get Weather</button>
+
+    <div id="error"></div>
+
+    <div id="result">
+      <p id="temp"></p>
+      <p id="humidity"></p>
+      <p id="condition"></p>
+    </div>
+  </div>
+
+<script>
+  let cityInput = document.querySelector("#city");
+  let btn = document.querySelector("#btn");
+  let errorBox = document.querySelector("#error");
+  let tempBox = document.querySelector("#temp");
+  let humidBox = document.querySelector("#humidity");
+  let condBox = document.querySelector("#condition");
+
+  btn.onclick = async function() {
+    let city = cityInput.value;
+
+    if (city === "") {
+      errorBox.innerHTML = "City name is required";
+      return;
+    }
+
+    errorBox.innerHTML = "";
+    tempBox.innerHTML = "";
+    humidBox.innerHTML = "";
+    condBox.innerHTML = "";
+
+    try {
+      let response = await fetch("https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=YOUR_API_KEY&units=metric");
+
+      if (!response.ok) {
+        errorBox.innerHTML = "Invalid city name";
+        return;
+      }
+
+      let data = await response.json();
+
+      tempBox.innerHTML = "Temperature: " + data.main.temp + "°C";
+      humidBox.innerHTML = "Humidity: " + data.main.humidity + "%";
+      condBox.innerHTML = "Condition: " + data.weather[0].description;
+
+    } catch (error) {
+      errorBox.innerHTML = "Failed to fetch weather data";
+    }
+  }
+</script>
+
+</body>
+</html>

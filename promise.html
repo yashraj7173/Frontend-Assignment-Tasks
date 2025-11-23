@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Post Loader</title>
+  <style>
+    body { font-family: Arial; background:#fafafa; padding:30px; }
+    #box { width:350px; background:white; padding:20px; border-radius:8px; border:1px solid #ccc; }
+    button { padding:10px 20px; font-size:16px; cursor:pointer; margin-top:10px; }
+    #msg { margin-top:10px; font-size:16px; }
+    ul { margin-top:15px; }
+  </style>
+</head>
+<body>
+
+  <h2>Post Loader with Delay</h2>
+
+  <div id="box">
+    <button id="loadBtn">Load Posts</button>
+    <div id="msg"></div>
+    <ul id="postList"></ul>
+  </div>
+
+  <script>
+    let loadBtn = document.querySelector("#loadBtn");
+    let msg = document.querySelector("#msg");
+    let postList = document.querySelector("#postList");
+
+    function loadPostsPromise() {
+      return new Promise(function(resolve, reject) {
+        setTimeout(function() {
+          let success = Math.random() > 0.3;
+          if (success) {
+            resolve(["Post One", "Post Two", "Post Three", "Post Four"]);
+          } else {
+            reject("Failed to load posts");
+          }
+        }, 2000);
+      });
+    }
+
+    async function loadPosts() {
+      msg.innerHTML = "Loading posts...";
+      postList.innerHTML = "";
+
+      try {
+        let posts = await loadPostsPromise();
+        msg.innerHTML = "";
+        for (let i = 0; i < posts.length; i++) {
+          let li = document.createElement("li");
+          li.innerHTML = posts[i];
+          postList.appendChild(li);
+        }
+      } catch (error) {
+        msg.innerHTML = error + " — Click Retry";
+      }
+    }
+
+    loadBtn.onclick = function() {
+      loadPosts();
+    };
+  </script>
+
+</body>
+</html>

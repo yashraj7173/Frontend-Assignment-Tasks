@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sequential Promise Execution</title>
+  <style>
+    body { font-family: Arial; background:#f0f0f0; padding:30px; }
+    #box { width:350px; background:white; padding:20px; border-radius:8px; border:1px solid #ccc; }
+    button { padding:10px 20px; font-size:16px; cursor:pointer; margin-bottom:10px; }
+    .bold { font-weight:bold; }
+  </style>
+</head>
+<body>
+
+  <h2>Sequential Promise Execution</h2>
+
+  <div id="box">
+    <button id="startBtn">Start Process</button>
+    <ul id="steps"></ul>
+  </div>
+
+<script>
+  let startBtn = document.querySelector("#startBtn");
+  let stepsList = document.querySelector("#steps");
+
+  function step1() {
+    return new Promise(function(resolve) {
+      setTimeout(function() {
+        resolve("Step 1 done");
+      }, 1000);
+    });
+  }
+
+  function step2() {
+    return new Promise(function(resolve) {
+      setTimeout(function() {
+        resolve("Step 2 done");
+      }, 1000);
+    });
+  }
+
+  function step3() {
+    return new Promise(function(resolve) {
+      setTimeout(function() {
+        resolve("Step 3 done");
+      }, 1000);
+    });
+  }
+
+  async function runSteps() {
+    stepsList.innerHTML = "";
+
+    let li1 = document.createElement("li");
+    li1.innerHTML = "Running Step 1...";
+    li1.className = "bold";
+    stepsList.appendChild(li1);
+    let s1 = await step1();
+    li1.innerHTML = s1;
+    li1.className = "";
+
+    let li2 = document.createElement("li");
+    li2.innerHTML = "Running Step 2...";
+    li2.className = "bold";
+    stepsList.appendChild(li2);
+    let s2 = await step2();
+    li2.innerHTML = s2;
+    li2.className = "";
+
+    let li3 = document.createElement("li");
+    li3.innerHTML = "Running Step 3...";
+    li3.className = "bold";
+    stepsList.appendChild(li3);
+    let s3 = await step3();
+    li3.innerHTML = s3;
+    li3.className = "";
+  }
+
+  startBtn.onclick = function() {
+    runSteps();
+  };
+</script>
+
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Random Joke Generator</title>
+  <style>
+    body { font-family: Arial; background:#f2f2f2; padding:30px; }
+    #box {
+      width:400px;
+      background:white;
+      padding:20px;
+      border-radius:8px;
+      border:1px solid #ccc;
+    }
+    #jokeSetup { font-size:18px; font-weight:bold; margin-bottom:10px; }
+    #jokePunch { font-size:17px; margin-bottom:15px; }
+    #btn { padding:10px 20px; font-size:16px; cursor:pointer; }
+  </style>
+</head>
+<body>
+
+  <h2>Random Joke Generator</h2>
+
+  <div id="box">
+    <div id="jokeSetup">Click the button to load a joke...</div>
+    <div id="jokePunch"></div>
+    <button id="btn">Next Joke</button>
+  </div>
+
+  <script>
+    let setup = document.querySelector("#jokeSetup");
+    let punch = document.querySelector("#jokePunch");
+    let btn = document.querySelector("#btn");
+
+    function loadJoke() {
+      btn.disabled = true;
+      btn.innerHTML = "Loading...";
+
+      fetch("https://official-joke-api.appspot.com/random_joke")
+        .then(function(response) {
+          return response.json();
+        })
+        .then(function(data) {
+          setup.innerHTML = data.setup;
+          punch.innerHTML = data.punchline;
+          btn.disabled = false;
+          btn.innerHTML = "Next Joke";
+        })
+        .catch(function() {
+          setup.innerHTML = "Failed to load joke.";
+          punch.innerHTML = "";
+          btn.disabled = false;
+          btn.innerHTML = "Next Joke";
+        });
+    }
+
+    btn.onclick = function() {
+      loadJoke();
+    };
+  </script>
+
+</body>
+</html>

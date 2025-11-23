@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Fetch Users</title>
+  <style>
+    body { font-family: Arial; padding: 20px; background:#f4f4f4; }
+    table { width: 600px; border-collapse: collapse; margin-top:20px; background:white; }
+    th, td { border:1px solid #333; padding:10px; text-align:left; }
+    th { background:#ddd; }
+    #refreshBtn { padding:10px 20px; font-size:16px; cursor:pointer; }
+    #loader { display:none; font-size:18px; margin-top:10px; }
+  </style>
+</head>
+<body>
+
+  <h2>User Data (API Fetch)</h2>
+
+  <button id="refreshBtn">Refresh</button>
+  <div id="loader">Loading...</div>
+
+  <table id="userTable">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>City</th>
+      </tr>
+    </thead>
+    <tbody id="tableBody"></tbody>
+  </table>
+
+<script>
+  let refreshBtn = document.querySelector("#refreshBtn");
+  let tableBody = document.querySelector("#tableBody");
+  let loader = document.querySelector("#loader");
+
+  async function fetchUsers() {
+    loader.style.display = "block";
+    tableBody.innerHTML = "";
+
+    let response = await fetch("https://jsonplaceholder.typicode.com/users");
+    let data = await response.json();
+
+    loader.style.display = "none";
+
+    for (let i = 0; i < data.length; i++) {
+      let row = document.createElement("tr");
+
+      let td1 = document.createElement("td");
+      td1.innerHTML = data[i].name;
+      
+      let td2 = document.createElement("td");
+      td2.innerHTML = data[i].email;
+
+      let td3 = document.createElement("td");
+      td3.innerHTML = data[i].address.city;
+
+      row.appendChild(td1);
+      row.appendChild(td2);
+      row.appendChild(td3);
+
+      tableBody.appendChild(row);
+    }
+  }
+
+  refreshBtn.onclick = function() {
+    fetchUsers();
+  };
+
+  fetchUsers();
+</script>
+
+</body>
+</html>
