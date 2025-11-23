@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To Do</title>
+
+    <style>
+        body {
+    background: linear-gradient(to bottom right, #fff7ad, #ffcf71);
+}
+
+        .todo-box{
+            width: 350px;
+            margin: 40px auto;
+            padding: 20px;
+            border: 2px solid black;
+            border-radius: 10px;
+            background-color: beige;
+        }
+
+        #btn{
+            background-color: blanchedalmond;
+            border-radius: 20%;
+        }
+
+        #taskbox {
+            background-color: blanchedalmond;
+        }
+
+        .top{
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        #tasks{
+            margin-top: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .del{
+            border-radius: 20%;
+            background-color: rgb(255, 214, 170);
+        }
+
+        .taskbox{
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="todo-box">
+        <div class="top">
+            <input type="text" id="taskbox" placeholder="Add a Task">
+            <button id="btn">Add</button>
+        </div>
+
+        <div id="tasks"></div>
+    </div>
+
+    <script>
+        let input = document.getElementById("taskbox");
+        let btn = document.getElementById("btn");
+        let tasksContainer = document.getElementById("tasks");
+
+        btn.onclick = function () {
+            if (input.value === "") return;
+
+            let box = document.createElement("div");
+            box.className = "taskbox";
+
+            let text = document.createElement("span");
+            text.innerText = input.value;
+
+            let del = document.createElement("button");
+            del.innerText = "Delete";
+            del.className = "del";
+
+            del.onclick = function () {
+                box.remove();
+            }
+
+            text.onclick = function () {
+                let newText = prompt("Edit:", text.innerText);
+                if (newText !== "") text.innerText = newText;
+            }
+
+            box.appendChild(text);
+            box.appendChild(del);
+            tasksContainer.appendChild(box);
+
+            input.value = "";
+        }
+    </script>
+
+</body>
+</html>

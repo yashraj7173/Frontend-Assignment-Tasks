@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Normal Image Carousel</title>
+  <style>
+    body {
+      font-family: Arial;
+      text-align: center;
+      background-color: #f0f0f0;
+      padding-top: 40px;
+    }
+
+    img {
+      width: 500px;
+      height: 300px;
+      object-fit: cover;
+      border: 2px solid #000;
+    }
+
+    button {
+      margin: 12px;
+      padding: 10px 25px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Simple Image Carousel (No Shortcuts)</h2>
+
+  <img id="slide" src="https://picsum.photos/id/1015/800/500" alt="slide">
+  <br><br>
+
+  <button id="prev">Previous</button>
+  <button id="next">Next</button>
+
+  <script>
+
+    let images = [
+      "https://picsum.photos/id/1015/800/500",
+      "https://picsum.photos/id/1025/800/500",
+      "https://picsum.photos/id/1035/800/500",
+      "https://picsum.photos/id/1045/800/500",
+      "https://picsum.photos/id/1055/800/500"
+    ];
+
+    
+    let index = 0;
+
+    
+    let imgTag = document.getElementById("slide");
+
+    
+    let nextButton = document.getElementById("next");
+    nextButton.addEventListener("click", function () {
+      index = index + 1;
+      if (index === images.length) {
+        index = 0;
+      }
+      imgTag.src = images[index];
+    });
+
+    
+    let prevButton = document.getElementById("prev");
+    prevButton.addEventListener("click", function () {
+      index = index - 1;
+      if (index < 0) {
+        index = images.length - 1;
+      }
+      imgTag.src = images[index];
+    });
+
+    
+    setInterval(function () {
+      index = index + 1;
+      if (index === images.length) {
+        index = 0;
+      }
+      imgTag.src = images[index];
+    }, 3000);
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Product Filter</title>
+  <style>
+    body { font-family: Arial; background:#f2f2f2; padding:30px; }
+
+    .btn { padding:10px 20px; margin:5px; cursor:pointer; font-size:16px; }
+
+    #searchBox {
+      width:300px; padding:8px; font-size:16px; margin:10px 0;
+    }
+
+    #products {
+      margin-top:20px; padding:10px; background:white;
+      width:350px; border-radius:6px; border:1px solid #ccc;
+    }
+
+    .item { padding:6px; border-bottom:1px solid #ddd; }
+  </style>
+</head>
+<body>
+
+  <h2>Interactive Product Filter</h2>
+
+  <button class="btn" id="allBtn">All</button>
+  <button class="btn" id="elecBtn">Electronics</button>
+  <button class="btn" id="clothBtn">Clothing</button>
+<br>
+
+  <input type="text" id="searchBox" placeholder="Search products...">
+
+  <div id="products"></div>
+
+<script>
+  let productList = [
+    { name: "Laptop", category: "electronics" },
+    { name: "Mobile Phone", category: "electronics" },
+    { name: "Headphones", category: "electronics" },
+    { name: "T-Shirt", category: "clothing" },
+    { name: "Jeans", category: "clothing" },
+    { name: "Jacket", category: "clothing" },
+    { name: "Book - Java", category: "books" },
+    { name: "Book - HTML", category: "books" },
+    { name: "Smart Watch", category: "electronics" },
+    { name: "Sweatshirt", category: "clothing" }
+  ];
+
+  let productBox = document.querySelector("#products");
+  let allBtn = document.querySelector("#allBtn");
+  let elecBtn = document.querySelector("#elecBtn");
+  let clothBtn = document.querySelector("#clothBtn");
+  let searchBox = document.querySelector("#searchBox");
+
+  function showProducts(list) {
+    productBox.innerHTML = "";
+
+    for (let i = 0; i < list.length; i++) {
+      let div = document.createElement("div");
+      div.className = "item";
+      div.innerHTML = list[i].name + " (" + list[i].category + ")";
+      productBox.appendChild(div);
+    }
+  }
+
+  allBtn.onclick = function() {
+    showProducts(productList);
+  };
+
+  elecBtn.onclick = function() {
+    let temp = [];
+    for (let i = 0; i < productList.length; i++) {
+      if (productList[i].category === "electronics") {
+        temp.push(productList[i]);
+      }
+    }
+    showProducts(temp);
+  };
+
+  clothBtn.onclick = function() {
+    let temp = [];
+    for (let i = 0; i < productList.length; i++) {
+      if (productList[i].category === "clothing") {
+        temp.push(productList[i]);
+      }
+    }
+    showProducts(temp);
+  };
+
+  searchBox.onkeyup = function() {
+    let keyword = searchBox.value.toLowerCase();
+    let temp = [];
+
+    for (let i = 0; i < productList.length; i++) {
+      let itemName = productList[i].name.toLowerCase();
+      if (itemName.includes(keyword)) {
+        temp.push(productList[i]);
+      }
+    }
+
+    showProducts(temp);
+  };
+
+  showProducts(productList);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Form Validation App</title>
+  <style>
+    body {
+      font-family: Arial;
+      background-color: #f0f0f0;
+      padding: 40px;
+    }
+
+    .container {
+      width: 350px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+
+    label {
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    input {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      margin-bottom: 5px;
+      font-size: 15px;
+      border: 1px solid #888;
+      border-radius: 5px;
+    }
+
+    .error {
+      color: red;
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+
+    .success {
+      color: green;
+      font-size: 14px;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>Registration Form</h2>
+
+    <label>Name</label><br>
+    <input type="text" id="name">
+    <div id="nameError" class="error"></div>
+
+    <label>Email</label><br>
+    <input type="text" id="email">
+    <div id="emailError" class="error"></div>
+
+    <label>Password</label><br>
+    <input type="password" id="password">
+    <div id="passError" class="error"></div>
+
+    <button id="submitBtn">Register</button>
+
+    <p id="finalMessage"></p>
+  </div>
+
+  <script>
+    let nameInput = document.getElementById("name");
+    let emailInput = document.getElementById("email");
+    let passInput = document.getElementById("password");
+    let submitBtn = document.getElementById("submitBtn");
+
+    let nameError = document.getElementById("nameError");
+    let emailError = document.getElementById("emailError");
+    let passError = document.getElementById("passError");
+    let finalMessage = document.getElementById("finalMessage");
+
+    submitBtn.addEventListener("click", function() {
+      let valid = true;
+      finalMessage.innerHTML = "";
+
+    
+      if (nameInput.value.trim() === "") {
+        nameError.innerHTML = "Name is required";
+        nameInput.style.border = "2px solid red";
+        valid = false;
+      } else {
+        nameError.innerHTML = "";
+        nameInput.style.border = "2px solid green";
+      }
+
+      
+      if (emailInput.value.trim() === "") {
+        emailError.innerHTML = "Email is required";
+        emailInput.style.border = "2px solid red";
+        valid = false;
+      } else if (!emailInput.value.includes("@")) {
+        emailError.innerHTML = "Email must include '@'";
+        emailInput.style.border = "2px solid red";
+        valid = false;
+      } else {
+        emailError.innerHTML = "";
+        emailInput.style.border = "2px solid green";
+      }
+
+      
+      if (passInput.value.trim() === "") {
+        passError.innerHTML = "Password is required";
+        passInput.style.border = "2px solid red";
+        valid = false;
+      } else if (passInput.value.length < 8) {
+        passError.innerHTML = "Password must be at least 8 characters";
+        passInput.style.border = "2px solid red";
+        valid = false;
+      } else {
+        passError.innerHTML = "";
+        passInput.style.border = "2px solid green";
+      }
+
+      if (valid === true) {
+        finalMessage.innerHTML = "<span class='success'>Registration Successful ✔</span>";
+      }
+    });
+  </script>
+
+</body>
+</html>
